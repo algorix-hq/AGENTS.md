@@ -40,11 +40,25 @@ test ! -e AGENTS.md || { echo "AGENTS.md already exists; not overwriting." >&2; 
 curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/main/AGENTS.template.md -o AGENTS.md
 
 # …or pin a reproducible version (recommended for teams):
-# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.0.0/AGENTS.template.md -o AGENTS.md
+# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.1.0/AGENTS.template.md -o AGENTS.md
 ```
 
 Or paste it in as boilerplate when you `init` a new repo. Once it's in your repo,
 it belongs to that repo — commit it, and let agents grow its §7 as they work.
+
+### Make sure your agent actually reads it
+
+`AGENTS.md` is recognized natively by many tools (Codex, Amp, Jules, opencode,
+and others), but discovery varies — some tools need a one-line pointer from their
+own config. If yours does, add one so the file is read on entry:
+
+- **Cursor** → in `.cursorrules` (or `.cursor/rules/*`): `Read AGENTS.md fully before doing anything.`
+- **Claude Code** → in `CLAUDE.md`: `See AGENTS.md for the working agreement; follow it.`
+- **GitHub Copilot** → in `.github/copilot-instructions.md`: `Follow AGENTS.md.`
+- **Windsurf** → in `.windsurfrules`: `Read AGENTS.md before acting.`
+
+Keep the pointer to one line — the real content stays in `AGENTS.md` so there's a
+single source to maintain.
 
 ### Per-developer language override (optional)
 
