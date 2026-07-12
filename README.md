@@ -4,13 +4,27 @@ This repo publishes Algorix's canonical [`AGENTS.template.md`](./AGENTS.template
 the baseline agentic-AI collaboration convention we drop into every repository —
 application code, infrastructure, docs, data, anything.
 
-> **Two AGENTS files, different jobs:**
-> - [`AGENTS.template.md`](./AGENTS.template.md) — the artifact you copy into other
->   repos (renaming it to `AGENTS.md` there).
+> **Files in this repo, different jobs:**
+> - [`AGENTS.template.md`](./AGENTS.template.md) — the **public, vendor-neutral**
+>   artifact anyone copies into their own repo (renaming it to `AGENTS.md` there).
+> - [`AGENTS.algorix.md`](./AGENTS.algorix.md) — the **Algorix internal** variant:
+>   the same baseline plus an Algorix organization-conventions block (§0). Algorix
+>   repos vendor this one.
 > - [`AGENTS.md`](./AGENTS.md) — guidance for working in *this* boilerplate repo.
 >
 > They're separate so that agents working here never write this repo's own notes
-> into the template everyone else vendors.
+> into the artifacts everyone else vendors.
+
+## Which one do I use?
+
+- **Outside Algorix / any project:** use [`AGENTS.template.md`](./AGENTS.template.md).
+  Fully vendor-neutral.
+- **Inside Algorix:** use [`AGENTS.algorix.md`](./AGENTS.algorix.md). It adds §0
+  (organization conventions that apply to every Algorix repo) on top of the same
+  baseline.
+
+Both share the identical baseline (§1–§6) and marker structure; the Algorix
+variant only adds §0 and uses `ALGORIX`-named markers.
 
 ## What the template is
 
@@ -40,7 +54,10 @@ test ! -e AGENTS.md || { echo "AGENTS.md already exists; not overwriting." >&2; 
 curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/main/AGENTS.template.md -o AGENTS.md
 
 # …or pin a reproducible version (recommended for teams):
-# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.2.0/AGENTS.template.md -o AGENTS.md
+# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.3.0/AGENTS.template.md -o AGENTS.md
+
+# Algorix internal repos: vendor the Algorix variant instead:
+# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/main/AGENTS.algorix.md -o AGENTS.md
 ```
 
 Or paste it in as boilerplate when you `init` a new repo. Once it's in your repo,

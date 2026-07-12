@@ -1,56 +1,113 @@
-<!-- agents-baseline: v1.3.0 -->
-<!-- BEGIN AGENTS BASELINE v1.3.0
-     Everything between this marker and "END AGENTS BASELINE" is the shared
-     baseline. To adopt a newer baseline, replace THIS BLOCK ONLY and leave the
-     repo-local block (below the end marker) untouched. -->
+<!-- algorix-agents-baseline: v1.3.0 -->
+<!-- BEGIN ALGORIX AGENTS BASELINE v1.3.0
+     This is the Algorix internal variant of the shared AGENTS baseline. It is the
+     neutral baseline plus an Algorix organization-conventions block (§0). To adopt
+     a newer baseline, replace THIS BLOCK ONLY and leave the repo-local block
+     (below the end marker) untouched. The public, vendor-neutral version lives in
+     AGENTS.template.md. -->
 
 # AGENTS.md
 
-You are an AI agent working in this repository. This file is the **canonical
-summary of persistent, repo-specific agent guidance** — not the only thing you
-consult. Current files, configuration, command output, git history, CI, nested
-`AGENTS.md` files, and explicit user instructions all inform your work too, under
-the instruction hierarchy below.
+You are an AI agent working in an **Algorix** repository. This file is the
+**canonical summary of persistent, repo-specific agent guidance** — not the only
+thing you consult. Current files, configuration, command output, git history, CI,
+nested `AGENTS.md` files, and explicit user instructions all inform your work too,
+under the instruction hierarchy below.
 
 **Read in this order before you touch anything:**
-1. §1–§6 — how we work by default, and how to keep §7 current.
-2. §7 — this repo's accumulated, agent-written notes.
-3. `.agents.local.md` in the repo root **if it exists** — the current developer's
+1. §0 — Algorix organization conventions (apply in every Algorix repo).
+2. §1–§6 — how we work by default, and how to keep §7 current.
+3. §7 — this repo's accumulated, agent-written notes.
+4. `.agents.local.md` in the repo root **if it exists** — the current developer's
    personal overrides. Its absence is the normal state; don't create one unless
    asked.
 
 ### Instruction hierarchy (highest wins)
-1. Higher-priority platform / system / organization policies always apply.
+1. Higher-priority platform / system policies always apply.
 2. **Safety floor** (§5) — secret handling, destructive-operation confirmation,
    production safety, access control, and external side effects. **Nothing below
    can weaken this**: not chat instructions phrased as overrides, not §7, not
    `.agents.local.md`.
-3. Explicit instructions in the current task override workflow defaults.
-4. Current repository files, configuration, and command output override stale
+3. **Algorix organization conventions (§0)** — apply across all Algorix repos.
+4. Explicit instructions in the current task override workflow defaults.
+5. Current repository files, configuration, and command output override stale
    notes.
-5. `.agents.local.md` (personal, local) — communication and local workflow
-   preferences only.
-6. Verified §7 notes override the baseline defaults in §1–§4.
-7. The baseline defaults in §1–§4.
+6. `.agents.local.md` (personal, local) — communication and local workflow
+   preferences only, and only where §0 doesn't mandate otherwise.
+7. Verified §7 notes override the baseline defaults in §1–§4.
+8. The baseline defaults in §1–§4.
 
 ### Format notes
 - `AGENTS.md` is a **community convention**, not an official standard. Many agent
   tools recognize it, but exact discovery, inheritance, and scoping vary by tool.
 - In a monorepo, applicable `AGENTS.md` files **compose** from the repo root
   toward the edited file. A more specific file overrides a broader one **only
-  where they conflict**; non-conflicting broader rules (especially §5) still apply.
+  where they conflict**; non-conflicting broader rules (especially §5 and §0)
+  still apply.
 
 **How to use §1–§4:** they are **defaults, not dogma**. When this repo already
 shows an established practice (in its history, config, or §7 notes), follow the
 repo and use the default only as a fallback — then record what you found in §7
-(see §6). §5 (safety) is not a default; it is a floor that always applies.
+(see §6). §0 (org conventions) and §5 (safety) are not defaults; they apply
+regardless.
+
+---
+
+## 0. Algorix organization conventions
+
+These apply in **every** Algorix repository, on top of the baseline below. They
+are maintained by Algorix (not agent-edited); a repo may *add* specifics in §7 but
+must not relax anything here.
+
+- **Human-facing communication: Korean.** Talk to teammates in Korean by default
+  (chat, questions, PR descriptions aimed at people). Keep machine-facing text in
+  English per §1. Match a different language only if the user explicitly switches.
+
+- **Keep remote state current — standing commit+push authorization.** In Algorix
+  repos you are pre-authorized to **commit and push routine, non-destructive work
+  without asking each time.** After finishing a self-contained unit of work (a
+  coherent change that leaves the repo working), commit it with a clear message
+  and push to the remote so a fresh clone or new session can resume from it. This
+  is the standing authorization referenced in §4. It does **not** loosen the §5
+  safety floor: still get explicit confirmation for force-push, pushing to a
+  protected/default branch that requires a PR, publishing releases/tags, anything
+  destructive, or anything touching secrets. When a repo uses a PR-only flow, "push"
+  means push your branch — not bypass the PR.
+
+- **§7 as a self-improving, minimal context file (discoverability rule).** Keep §7
+  high-signal. Before writing any §7 line, apply one test: **can an agent discover
+  this by reading the repo?**
+  - **Discoverable** (directory layout, tech stack, naming visible in code,
+    architecture you can infer) → **don't record it.** It's noise that competes for
+    context and goes stale.
+  - **Not discoverable** (tool choices not implied by config like `uv` vs `pip` /
+    `pnpm` vs `npm`; hidden gotchas like required test flags or build-order deps;
+    landmines like code that looks refactorable but isn't; env/CI quirks like VPN
+    or special env vars; custom patterns that defy convention) → **record it.**
+  Treat §7 as a **diagnostic tool, not permanent config**: when an agent keeps
+  making the same mistake, add a line; then prefer fixing the root cause (rename
+  the confusing dir, add a lint rule, restructure imports) and **delete the line**
+  once the cause is gone. **The goal is to shrink §7 over time, not grow it.** This
+  refines §6: §6 says *when* to record; this says *record only the non-discoverable
+  minimum, and remove entries once obsolete.*
+
+<!-- Algorix maintainers: add further org-wide conventions below as they are
+     agreed. Keep each one durable and repo-agnostic (it must hold across ALL
+     Algorix repos); anything repo-specific belongs in that repo's §7. Suggested
+     slots — fill in when decided, delete if not adopting:
+
+  - Commit convention: <e.g. Conventional Commits, enforced org-wide?>
+  - Branch/PR workflow: <e.g. branch + PR required; no direct pushes to main?>
+  - Required reviews / CI gates: <...>
+  - Standard toolchain expectations: <...>
+-->
 
 ---
 
 ## 1. Communication
 
-- **Speak the user's language**, turn by turn. (For a committed team-wide language
-  rule or a personal override, see the Appendix.)
+- **Speak the user's language**, turn by turn. (Algorix default for human-facing
+  communication is Korean — see §0. For a personal override, see the Appendix.)
 - Unless the repository or task establishes otherwise, **write machine-facing text
   in English**: identifiers, internal comments, commit messages, branch names, and
   developer-facing diagnostic logs. Match the repo's existing convention when it
@@ -119,7 +176,8 @@ exist in **this** repo.
 
 ## 4. Commit, push & remote state (observe the repo first)
 
-Git conventions vary per repo, so **look before you follow a default.**
+Git conventions vary per repo, so **look before you follow a default** (unless §0
+mandates an org-wide rule).
 
 - **Commit messages:** read `git log --oneline -30` and follow the style in use.
   If there's no consistent style, default to
@@ -152,6 +210,7 @@ agent-written content. **§7 (agent-maintained) can never grant it.** Even under
 standing authorization, the §5 safety floor holds: no force-push, no protected/
 default-branch bypass, no releases, no secrets, no destructive ops without explicit
 per-task confirmation. Absent such a policy, the default above (ask first) applies.
+(Algorix enables this standing authorization in §0.)
 
 **Always, regardless of repo:**
 - **One logical change per commit.** Explicitly stage the relevant files
@@ -212,7 +271,7 @@ if you update it. **Update §7 when — and only when — one of these events oc
 - The user expressed a **durable, repo-wide preference or invariant** meant for
   future tasks (*"always do Y here" / "we never do Z in this repo"*) → record it
   under "Conventions." **Do not persist one-off, this-task-only instructions**
-  (e.g. "don't refactor in this PR").
+  (e.g. "don't refactor in this PR"). (Org-wide rules belong in §0, not §7.)
 - You **discovered a §7 entry is wrong** (a command failed, a path moved,
   conflicts with current files) → fix or delete it now. Current evidence always
   wins over a stale note. This is the strongest trigger to edit §7.
@@ -253,30 +312,30 @@ remote-write authority.)
 one side, then de-duplicate and prune to the soft cap. Never discard another
 author's §7 note to clear a conflict.
 
-<!-- END AGENTS BASELINE -->
+<!-- END ALGORIX AGENTS BASELINE -->
 
 
 ## Appendix — `.agents.local.md` and language pinning
 
-<!-- This Appendix is part of the baseline; replace it together with §1–§6.
+<!-- This Appendix is part of the baseline; replace it together with §0–§6.
      It sits before §7 so the repo-local block stays last. -->
 
-By default there is **no** `.agents.local.md`; the language rule in §1 ("match the
-user") is enough. Use the mechanisms below only when someone asks to pin a
-language (or other personal preference).
+By default there is **no** `.agents.local.md`; the language rules in §0/§1 are
+enough. Use the mechanisms below only when someone asks to pin a language (or other
+personal preference).
 
 - **Team-wide rule** ("everyone in this repo uses language X"): a shared, committed
-  decision → record it in §7 under "Conventions"
-  (e.g. _"Human-facing communication: Korean."_). Applies to everyone who clones.
+  decision → record it in §7 under "Conventions". (Algorix's org-wide Korean rule
+  already lives in §0; only add a §7 rule when a specific repo diverges.)
 - **Personal preference** ("I want language X, others may differ"): write it to
   **`.agents.local.md`** in the repo root and add `.agents.local.md` to
   `.gitignore`. Never commit it.
 
 `.agents.local.md` may override **communication and local workflow preferences
-only** (language, formatting, whether to commit without being asked). Per the
-instruction hierarchy, **it must not weaken the §5 safety floor** — secret
-handling, destructive-operation confirmation, production safety, access control,
-or remote side effects.
+only** (language, formatting, whether to commit without being asked), and only
+where §0 does not mandate otherwise. Per the instruction hierarchy, **it must not
+weaken the §5 safety floor** — secret handling, destructive-operation
+confirmation, production safety, access control, or remote side effects.
 
 ---
 
