@@ -28,17 +28,42 @@ This file has two kinds of content:
 
 If you are an AI agent picking up work in this repo: **read this entire file
 first**, then read §7 carefully — it tells you what previous agents learned here.
+Also check for a git-ignored **`.agents.local.md`** in the repo root; if present,
+it carries the current developer's personal overrides (see §1).
 
 ---
 
 ## 1. Communication
 
-- **Talk to humans in Korean.** Explanations, questions, PR descriptions aimed at
-  teammates, and chat responses are in Korean by default. Match the human's
-  language if they switch.
+### Language
+This file does **not** hard-code a conversation language. Resolve it in this order:
+
+1. **If `.agents.local.md` exists in the repo root, follow the language rule it
+   specifies.** (See below — this is the per-developer, git-ignored override.)
+2. **Otherwise, speak the language the user is speaking to you.** Match them turn
+   by turn; if they switch, you switch.
+
+Two ways a user can pin a language — pick based on what they ask for:
+
+- **"Everyone working in this repo should use language X."** → This is a shared,
+  committed rule. Record it directly in the repo-local section (§7, "Conventions
+  & deviations"), e.g. _"Human-facing communication in this repo: Korean."_ It's
+  committed, so it applies to every developer who clones the repo.
+- **"I personally want language X, but other developers may use their own."** →
+  This is a personal preference, not a repo rule. Write it to a **`.agents.local.md`**
+  file in the repo root and ensure that file is git-ignored (add `.agents.local.md`
+  to `.gitignore` if not already present). Never commit `.agents.local.md`.
+  This file is referenced by rule (1) above and read on every fresh session.
+
+If the two ever conflict, `.agents.local.md` (personal, local) wins over §7
+(shared, committed) for the current user — that's the whole point of the local
+override.
+
+### General
 - **Write machine-facing text in English.** Code, identifiers, comments, commit
   messages, branch names, log lines, and this file's shared sections stay in
-  English for portability and tooling compatibility.
+  English for portability and tooling compatibility — regardless of the
+  conversation language.
 - **No preamble, no flattery.** Get to the point. Report what you did, what you
   verified, and what's left. State uncertainty honestly — never imply something
   was tested when it wasn't.
