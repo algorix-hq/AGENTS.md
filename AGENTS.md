@@ -20,8 +20,8 @@ code.
 - **Communication:** match the user's language (docs and discussion here are
   typically Korean); keep the template's own text in English for portability.
 - **Editing the template:** preserve the baseline markers
-  (`BEGIN/END ALGORIX AGENTS BASELINE`, `BEGIN/END REPO-LOCAL CONTEXT`) and bump
-  the `algorix-agents-baseline: vX.Y.Z` version marker when you change baseline
+  (`BEGIN/END AGENTS BASELINE`, `BEGIN/END REPO-LOCAL CONTEXT`) and bump
+  the `agents-baseline: vX.Y.Z` version marker when you change baseline
   content, so downstream repos can tell what they have.
 - **Verification:** no automated checks exist. "Verify" here means proofreading
   the Markdown and sanity-checking that the two markers and the version marker are

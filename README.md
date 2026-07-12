@@ -40,7 +40,7 @@ test ! -e AGENTS.md || { echo "AGENTS.md already exists; not overwriting." >&2; 
 curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/main/AGENTS.template.md -o AGENTS.md
 
 # …or pin a reproducible version (recommended for teams):
-# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.1.0/AGENTS.template.md -o AGENTS.md
+# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.2.0/AGENTS.template.md -o AGENTS.md
 ```
 
 Or paste it in as boilerplate when you `init` a new repo. Once it's in your repo,
@@ -70,11 +70,11 @@ git-ignored `.agents.local.md` in the repo root. See the Appendix of
 ## Updating the convention
 
 This repo is the reference copy; baseline improvements land here first and bump the
-`algorix-agents-baseline: vX.Y.Z` marker at the top of the template.
+`agents-baseline: vX.Y.Z` marker at the top of the template.
 
 There is **no automatic update path** once a repo has vendored the file and grown
 its §7 — §7 is now that repo's own memory. The template is built for a clean manual
-update: everything between the `BEGIN/END ALGORIX AGENTS BASELINE` markers is the
+update: everything between the `BEGIN/END AGENTS BASELINE` markers is the
 replaceable baseline (§1–§6 plus intro, instruction hierarchy, and Appendix), and
 everything between `BEGIN/END REPO-LOCAL CONTEXT` is the repo's own §7.
 
@@ -86,3 +86,8 @@ concerns** — keep the baseline in `AGENTS.md` and move the repo-local memory t
 own file (e.g. `.agents/notes.md`) referenced from `AGENTS.md`. That makes the
 baseline freely replaceable at the cost of the single-file simplicity. It's a
 tradeoff; pick based on how often you re-sync.
+
+## License
+
+[MIT](./LICENSE) — the template is vendor-neutral; use and adapt it anywhere,
+for any project.

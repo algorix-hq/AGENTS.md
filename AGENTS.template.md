@@ -1,8 +1,8 @@
-<!-- algorix-agents-baseline: v1.1.0 -->
-<!-- BEGIN ALGORIX AGENTS BASELINE v1.1.0
-     Everything between this marker and "END ALGORIX AGENTS BASELINE" is the
-     shared Algorix baseline. To adopt a newer baseline, replace THIS BLOCK ONLY
-     and leave the repo-local block (below the end marker) untouched. -->
+<!-- agents-baseline: v1.2.0 -->
+<!-- BEGIN AGENTS BASELINE v1.2.0
+     Everything between this marker and "END AGENTS BASELINE" is the shared
+     baseline. To adopt a newer baseline, replace THIS BLOCK ONLY and leave the
+     repo-local block (below the end marker) untouched. -->
 
 # AGENTS.md
 
@@ -239,7 +239,7 @@ remote-write authority.)
 one side, then de-duplicate and prune to the soft cap. Never discard another
 author's §7 note to clear a conflict.
 
-<!-- END ALGORIX AGENTS BASELINE -->
+<!-- END AGENTS BASELINE -->
 
 
 ## Appendix — `.agents.local.md` and language pinning
