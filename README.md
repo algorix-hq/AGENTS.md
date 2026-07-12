@@ -6,14 +6,17 @@ code, infrastructure, docs, data, anything.
 
 ## What it is
 
-[`AGENTS.md`](./AGENTS.md) is a standalone working agreement for AI agents. It
-sets our shared conventions for communication, verification, commits/pushes, and
-safety, and it reserves a **repo-local context** section (§7) that agents grow
-over time into that repo's memory. It's written to be:
+[`AGENTS.md`](./AGENTS.md) is a standalone working agreement for AI agents. Its
+baseline sections (§1–§6) are **defaults, not dogma**: agents observe the repo's
+own practices first and fall back to these defaults only when the repo shows none.
+It reserves a **repo-local context** section (§7) that agents grow over time into
+that repo's memory, driven by concrete events (a command first succeeds, a wrong
+command gets corrected, the user corrects an approach). It's written to be:
 
-- **Portable** — self-contained, no external dependencies, works in any repo.
-- **Self-evolving** — the agent extends the local `AGENTS.md`'s §7 as it learns,
-  so knowledge persists across machines, sessions, and agents. Each repo evolves
+- **Portable** — no external dependencies, works in any repo type (code, infra,
+  docs, data).
+- **Self-evolving** — the agent extends the local `AGENTS.md`'s §7 as it works, so
+  knowledge persists across machines, sessions, and agents. Each repo evolves
   *its own copy*; the file does not phone home to this one.
 
 ## How to use it
@@ -37,6 +40,16 @@ git-ignored `.agents.local.md` in the repo root. See §1 of
 
 ## Updating the convention
 
-This repo is the reference copy. Improvements to the shared conventions (§1–6)
-land here first. Repos that already vendored `AGENTS.md` can re-pull the updated
-sections when they want — but their §7 (repo-local memory) always stays theirs.
+This repo is the reference copy. Improvements to the baseline sections (§1–§6)
+land here first.
+
+There is **no automatic update path** once a repo has vendored `AGENTS.md` and
+grown its §7 — §7 is now that repo's own memory. To adopt an improved baseline,
+**manually replace §1–§6 in the target repo and leave its §7 untouched.**
+
+If a repo re-syncs the baseline often and the manual merge becomes a chore,
+consider **splitting the two concerns**: keep the baseline in `AGENTS.md` and move
+the repo-local memory to its own file (e.g. `.agents/notes.md`), with `AGENTS.md`
+pointing at it. That makes the baseline freely replaceable and removes the merge
+problem entirely — at the cost of the "one self-contained file" simplicity. It's a
+tradeoff; pick based on how often you re-sync.
