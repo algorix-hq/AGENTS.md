@@ -1,31 +1,46 @@
 # AGENTS.md — Algorix boilerplate
 
-This repo holds Algorix's default [`AGENTS.md`](./AGENTS.md): the baseline
-agentic-AI collaboration convention we drop into every repository — application
-code, infrastructure, docs, data, anything.
+This repo publishes Algorix's canonical [`AGENTS.template.md`](./AGENTS.template.md):
+the baseline agentic-AI collaboration convention we drop into every repository —
+application code, infrastructure, docs, data, anything.
 
-## What it is
+> **Two AGENTS files, different jobs:**
+> - [`AGENTS.template.md`](./AGENTS.template.md) — the artifact you copy into other
+>   repos (renaming it to `AGENTS.md` there).
+> - [`AGENTS.md`](./AGENTS.md) — guidance for working in *this* boilerplate repo.
+>
+> They're separate so that agents working here never write this repo's own notes
+> into the template everyone else vendors.
 
-[`AGENTS.md`](./AGENTS.md) is a standalone working agreement for AI agents. Its
-baseline sections (§1–§6) are **defaults, not dogma**: agents observe the repo's
-own practices first and fall back to these defaults only when the repo shows none.
-It reserves a **repo-local context** section (§7) that agents grow over time into
+## What the template is
+
+[`AGENTS.template.md`](./AGENTS.template.md) is a standalone working agreement for
+AI agents. Its baseline sections (§1–§6) are **defaults, not dogma**: agents
+observe the repo's own practices first and fall back to these defaults only when
+the repo shows none. §5 is a **safety floor** that always applies. The template
+reserves a **repo-local context** section (§7) that agents grow over time into
 that repo's memory, driven by concrete events (a command first succeeds, a wrong
-command gets corrected, the user corrects an approach). It's written to be:
+command gets corrected, the user states a durable rule). It's written to be:
 
-- **Portable** — no external dependencies, works in any repo type (code, infra,
-  docs, data).
-- **Self-evolving** — the agent extends the local `AGENTS.md`'s §7 as it works, so
+- **Portable** — no external dependencies, works in any repo type.
+- **Self-evolving** — the agent extends the local copy's §7 as it works, so
   knowledge persists across machines, sessions, and agents. Each repo evolves
   *its own copy*; the file does not phone home to this one.
 
 ## How to use it
 
-Copy [`AGENTS.md`](./AGENTS.md) into the root of your repository:
+From within your target repo, install the template as `AGENTS.md` — without
+clobbering an existing one:
 
 ```sh
-# From within your target repo
-curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/main/AGENTS.md -o AGENTS.md
+# Refuse to overwrite an existing AGENTS.md (which may hold a grown §7)
+test ! -e AGENTS.md || { echo "AGENTS.md already exists; not overwriting." >&2; exit 1; }
+
+# Latest baseline:
+curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/main/AGENTS.template.md -o AGENTS.md
+
+# …or pin a reproducible version (recommended for teams):
+# curl -fsSL https://raw.githubusercontent.com/algorix-hq/AGENTS.md/v1.0.0/AGENTS.template.md -o AGENTS.md
 ```
 
 Or paste it in as boilerplate when you `init` a new repo. Once it's in your repo,
@@ -33,23 +48,27 @@ it belongs to that repo — commit it, and let agents grow its §7 as they work.
 
 ### Per-developer language override (optional)
 
-`AGENTS.md` doesn't hard-code a conversation language. If an individual developer
+The template doesn't hard-code a conversation language. If an individual developer
 wants a specific language without imposing it on everyone, they create a
-git-ignored `.agents.local.md` in the repo root. See §1 of
-[`AGENTS.md`](./AGENTS.md) for the exact rules.
+git-ignored `.agents.local.md` in the repo root. See the Appendix of
+[`AGENTS.template.md`](./AGENTS.template.md) for the exact rules.
 
 ## Updating the convention
 
-This repo is the reference copy. Improvements to the baseline sections (§1–§6)
-land here first.
+This repo is the reference copy; baseline improvements land here first and bump the
+`algorix-agents-baseline: vX.Y.Z` marker at the top of the template.
 
-There is **no automatic update path** once a repo has vendored `AGENTS.md` and
-grown its §7 — §7 is now that repo's own memory. To adopt an improved baseline,
-**manually replace §1–§6 in the target repo and leave its §7 untouched.**
+There is **no automatic update path** once a repo has vendored the file and grown
+its §7 — §7 is now that repo's own memory. The template is built for a clean manual
+update: everything between the `BEGIN/END ALGORIX AGENTS BASELINE` markers is the
+replaceable baseline (§1–§6 plus intro, instruction hierarchy, and Appendix), and
+everything between `BEGIN/END REPO-LOCAL CONTEXT` is the repo's own §7.
 
-If a repo re-syncs the baseline often and the manual merge becomes a chore,
-consider **splitting the two concerns**: keep the baseline in `AGENTS.md` and move
-the repo-local memory to its own file (e.g. `.agents/notes.md`), with `AGENTS.md`
-pointing at it. That makes the baseline freely replaceable and removes the merge
-problem entirely — at the cost of the "one self-contained file" simplicity. It's a
+**To adopt a newer baseline:** replace the baseline block only, and leave the
+repo-local block untouched. Compare version markers to see what changed.
+
+If you re-sync often and even that is a chore, you can instead **split the two
+concerns** — keep the baseline in `AGENTS.md` and move the repo-local memory to its
+own file (e.g. `.agents/notes.md`) referenced from `AGENTS.md`. That makes the
+baseline freely replaceable at the cost of the single-file simplicity. It's a
 tradeoff; pick based on how often you re-sync.
